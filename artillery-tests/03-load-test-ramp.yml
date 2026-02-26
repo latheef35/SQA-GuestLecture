@@ -1,0 +1,38 @@
+config:
+  target: "http://sample-app:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Stage 1: 5/sec"
+    - duration: 60
+      arrivalRate: 10
+      name: "Stage 2: 10/sec"
+    - duration: 60
+      arrivalRate: 20
+      name: "Stage 3: 20/sec"
+    - duration: 60
+      arrivalRate: 40
+      name: "Stage 4: 40/sec"
+    - duration: 60
+      arrivalRate: 80
+      name: "Stage 5: 80/sec"
+    - duration: 60
+      arrivalRate: 100
+      name: "Stage 6: 100/sec"
+
+scenarios:
+  - name: "Mixed workload"
+    flow:
+      - get:
+          url: "/api/products"
+      - think: 1
+      - get:
+          url: "/api/users"
+      - think: 1
+      - post:
+          url: "/api/orders"
+          json:
+            userId: "{{ $randomNumber(1, 1000) }}"
+            productId: "{{ $randomNumber(1, 100) }}"
+            quantity: 1
+            paymentMethod: "credit_card"

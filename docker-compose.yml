@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  sample-app:
+    build:
+      context: ./sample-app
+    container_name: perf-test-app
+    ports:
+      - "3000:3000"
+    networks:
+      - perf-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:3000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  artillery:
+    image: artilleryio/artillery:latest
+    container_name: perf-artillery
+    networks:
+      - perf-network
+    volumes:
+      - ./artillery-tests:/tests
+      - ./artillery-reports:/reports
+    working_dir: /tests
+    # entrypoint: ["sh"]
+    # command: ["-c", "tail -f /dev/null"]
+    depends_on:
+      sample-app:
+        condition: service_healthy
+
+networks:
+  perf-network:
+    driver: bridge

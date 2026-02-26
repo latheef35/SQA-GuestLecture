@@ -1,0 +1,20 @@
+config:
+  target: "http://sample-app:3000"
+  phases:
+    - duration: 1800  # 30 minutes
+      arrivalRate: 15
+      name: "Sustained load"
+
+scenarios:
+  - flow:
+      - get:
+          url: "/api/products"
+      - think: 2
+      - get:
+          url: "/api/users/{{ $randomNumber(1, 1000) }}"
+      - think: 1
+      - post:
+          url: "/api/logs"
+          json:
+            action: "view_product"
+            timestamp: "{{ $timestamp() }}"

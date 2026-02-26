@@ -157,7 +157,7 @@ Time: ────────────────────────�
 **Response Time**: Time from request sent to response received
 
 - **Average (Mean)**: Sum of all response times / number of requests
-  - ⚠️ Can be misleading due to outliers
+  - Can be misleading due to outliers
   
 - **Median (p50)**: 50% of requests are faster than this
   - Better representation of "typical" experience
@@ -207,11 +207,16 @@ Time: ────────────────────────�
 - Mac: [Download](https://www.docker.com/products/docker-desktop)
 - Linux: [Installation Guide](https://docs.docker.com/engine/install/)
 
+
 **System Requirements:**
 - 4GB RAM (8GB recommended)
 - 5GB free disk space
 - Internet connection for initial setup
 
+**Artillery Cloud Account**
+- Artillery Cloud [Artillery Cloud Account](https://www.artillery.io/docs/get-started/get-artillery#set-up-cloud-reporting)
+
+Grab the API key for reports
 
 
 ## Lab exercises

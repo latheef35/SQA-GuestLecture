@@ -1,0 +1,22 @@
+config:
+  target: "http://sample-app:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 1
+      name: "Smoke test"
+
+scenarios:
+  - name: "Basic health check"
+    flow:
+      - get:
+          url: "/health"
+          expect:
+            - statusCode: 200
+      - get:
+          url: "/api/products"
+          expect:
+            - statusCode: 200
+      - get:
+          url: "/api/users"
+          expect:
+            - statusCode: 200

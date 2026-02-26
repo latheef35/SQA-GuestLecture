@@ -1,0 +1,31 @@
+config:
+  target: "http://sample-app:3000"
+  phases:
+    - duration: 120
+      arrivalRate: 20
+      name: "Normal traffic"
+    - duration: 60
+      arrivalRate: 200
+      name: "SPIKE"
+    - duration: 120
+      arrivalRate: 20
+      name: "Back to normal"
+
+scenarios:
+  - name: "Flash sale"
+    weight: 70
+    flow:
+      - get:
+          url: "/api/products/flash-sale"
+      - think: 0.5
+      - post:
+          url: "/api/cart/add"
+          json:
+            productId: 1
+            quantity: 1
+
+  - name: "Regular browsing"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/products"

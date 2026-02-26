@@ -1,0 +1,48 @@
+config:
+  target: "http://sample-app:3000"
+  phases:
+    - duration: 120
+      arrivalRate: 10
+      name: "Warm up"
+    - duration: 300
+      arrivalRate: 25
+      name: "Normal load"
+    - duration: 120
+      arrivalRate: 10
+      name: "Cool down"
+
+scenarios:
+  - name: "Browse products"
+    weight: 60
+    flow:
+      - get:
+          url: "/api/products"
+          capture:
+            - json: "$.data[0].id"
+              as: "productId"
+      - think: 2
+      - get:
+          url: "/api/products/{{ productId }}"
+      - think: 3
+      - get:
+          url: "/api/products/{{ productId }}/reviews"
+
+  - name: "Search products"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/products?search=product"
+      - think: 1
+      - get:
+          url: "/api/products?search=product&sort=price"
+
+  - name: "Create user"
+    weight: 10
+    flow:
+      - post:
+          url: "/api/users"
+          json:
+            name: "{{ $randomString() }}"
+            email: "{{ $randomString() }}@test.com"
+          expect:
+            - statusCode: 201
