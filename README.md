@@ -510,13 +510,13 @@ docker system prune -a
 
 # Start fresh
 docker-compose up -d
-
+```
 ## Additional Resources
 
 ### Artillery Documentation
-- [Official Docs](https://www.artillery.io/docs)
-- [Core Concepts](https://www.artillery.io/docs/guides/overview/welcome)
-- [Script Reference](https://www.artillery.io/docs/reference/test-script)
+- [Artillery Official Docs](https://www.artillery.io/docs)
+- [Artillery Core Concepts](https://www.artillery.io/docs/guides/overview/welcome)
+- [Artillery Script Reference](https://www.artillery.io/docs/reference/test-script)
 
 ### Performance Testing
 - [Google SRE Book - Performance](https://sre.google/sre-book/testing-reliability/)
